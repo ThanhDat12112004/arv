@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form tư vấn</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary-gradient: linear-gradient(90deg, #2c5cff, #4ea1ff);
+        --success-bg: rgba(210, 224, 248, 0.45);
+        --success-border: rgba(180, 200, 235, 0.4);
+      }
+
+      body {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background:
+          linear-gradient(rgba(40, 80, 200, 0.55), rgba(40, 80, 200, 0.55)),
+          url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d');
+        background-size: cover;
+        background-attachment: fixed;
+      }
+
+      .form-container {
+        width: 360px;
+        padding: 20px;
+        border-radius: 16px;
+
+        background: #ffffffac;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+
+        box-shadow:
+          0 0 30px rgba(44, 92, 255, 0.4),
+          0 0 60px rgba(78, 161, 255, 0.25),
+          0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .form-title {
+        text-align: center;
+        font-size: 22px;
+        font-weight: 700;
+        color: #152b6b;
+        margin-bottom: 0;
+      }
+
+      .form-description {
+        text-align: center;
+        font-size: 13px;
+        color: #555;
+        margin-bottom: 12px;
+      }
+
+      .form-control {
+        padding: 10px 12px;
+        border: none;
+        border-radius: 10px;
+        background: #f2f2f2;
+        font-size: 14px;
+        color: #333;
+        font-weight: 500;
+      }
+
+      .form-control:focus {
+        border-color: #2c5cff;
+        box-shadow: 0 0 0 0.2rem rgba(44, 92, 255, 0.25);
+      }
+
+      textarea.form-control {
+        height: 70px;
+        resize: none;
+      }
+
+      .btn-submit {
+        width: 100%;
+        padding: 11px;
+        border: none;
+        border-radius: 10px;
+        color: white;
+        font-weight: 700;
+        font-size: 16px;
+        background: var(--primary-gradient);
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(44, 92, 255, 0.3);
+      }
+
+      .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(44, 92, 255, 0.4);
+      }
+
+      .btn-submit:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(44, 92, 255, 0.3);
+      }
+
+      .alert-success {
+        display: none;
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 10px;
+
+        background: var(--success-bg);
+        border: 1px solid var(--success-border);
+        backdrop-filter: blur(8px) saturate(120%);
+        -webkit-backdrop-filter: blur(8px) saturate(120%);
+
+        font-size: 13px;
+        color: #1a4d7a;
+
+        align-items: center;
+        gap: 8px;
+      }
+
+      .check-icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #2e7d32;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: bold;
+        flex-shrink: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="form-container">
+      <h1 class="form-title">NHẬN TƯ VẤN</h1>
+      <div style="height: 20px"></div>
+      <p class="form-description">Vui lòng cho chúng tôi biết thêm về nhu cầu của bạn (*).</p>
+
+      <form id="consultForm">
+        <input type="text" class="form-control mb-3" placeholder="Họ và tên (*)" required />
+        <input type="tel" class="form-control mb-3" placeholder="Số điện thoại" />
+        <input type="email" class="form-control mb-3" placeholder="Email" />
+        <input
+          type="text"
+          class="form-control mb-3"
+          placeholder="Chọn thiết bị hoặc dịch vụ bạn quan tàm (*)"
+          required
+        />
+
+        <textarea
+          class="form-control mb-3"
+          placeholder="Mô tả yêu cầu chi tiết của bạn (*)"
+          required
+        ></textarea>
+
+        <button type="submit" class="btn-submit">GỬI YÊU CẦU</button>
+
+        <div class="alert-success d-flex" id="successBox" style="display: none !important">
+          <div class="check-icon">✓</div>
+          <div>Cảm ơn bạn! Chúng tôi sẽ liên hệ tư vấn bạn trong thời gian sớm nhất.</div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      const form = document.getElementById('consultForm');
+      const successBox = document.getElementById('successBox');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Validate form - check if all required fields are filled
+        const inputs = form.querySelectorAll('[required]');
+        let isValid = true;
+
+        inputs.forEach((input) => {
+          if (!input.value.trim()) {
+            isValid = false;
+          }
+        });
+
+        if (!isValid) {
+          alert('Vui lòng điền đầy đủ các trường bắt buộc (*)');
+          return;
+        }
+
+        // Show success message only when form is valid
+        successBox.style.display = 'flex';
+
+        // Reset form
+        setTimeout(() => {
+          form.reset();
+        }, 500);
+
+        // Hide success message after 5 seconds
+        setTimeout(() => {
+          successBox.style.display = 'none';
+        }, 5000);
+      });
+    </script>
+  </body>
+</html>

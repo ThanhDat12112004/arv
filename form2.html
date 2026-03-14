@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form liên hệ</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background:
+          linear-gradient(rgba(20, 40, 80, 0.65), rgba(20, 40, 80, 0.65)),
+          url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d');
+
+        background-size: cover;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .container {
+        width: 420px;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 20px 50px rgba(255, 255, 255, 0.35);
+      }
+
+      .header {
+        background: linear-gradient(90deg, #2f66c7, #4e8df5);
+        color: white;
+        text-align: center;
+        padding: 22px;
+        font-size: 24px;
+        letter-spacing: 1px;
+      }
+
+      .form-box {
+        background: #f3f3f3;
+        padding: 25px;
+      }
+
+      .field {
+        background: #fffefe;
+        border-radius: 14px;
+        padding: 14px;
+        margin-bottom: 18px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .field label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+      }
+
+      .field i {
+        color: #3a86d6;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 12px;
+        font-size: 14px;
+        outline: none;
+        box-sizing: border-box;
+      }
+
+      textarea {
+        height: 110px;
+        resize: none;
+      }
+
+      .error {
+        color: #b63131;
+        font-size: 13px;
+        margin-top: 6px;
+        display: none;
+      }
+
+      .error i {
+        color: #b63131;
+      }
+
+      button {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 14px;
+        font-size: 18px;
+        color: white;
+        cursor: pointer;
+
+        background: linear-gradient(90deg, #2f66c7, #4e8df5);
+      }
+
+      button:hover {
+        opacity: 0.9;
+      }
+
+      .success {
+        margin-top: 18px;
+        padding: 12px;
+        border-radius: 12px;
+        background: #e5f6ea;
+        border: 2px solid #64b886;
+        color: #2e7d32;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+        flex-wrap: wrap;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+
+      .success i {
+        color: #2e7d32;
+      }
+
+      .success.hidden {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header">LIÊN HỆ VỚI CHÚNG TÔI!</div>
+
+      <div class="form-box">
+        <form>
+          <div class="field">
+            <label><i class="fa fa-user"></i> Tên</label>
+            <input type="text" placeholder="Tên của bạn" />
+          </div>
+
+          <div class="field">
+            <label><i class="fa fa-phone"></i> Điện thoại</label>
+            <input type="text" placeholder="Số điện thoại của bạn" />
+          </div>
+
+          <div class="field">
+            <label><i class="fa fa-envelope"></i> Email</label>
+            <input type="email" placeholder="Địa chỉ email của bạn" id="emailInput" />
+            <div class="error" id="emailError"><i class="fa fa-circle-exclamation"></i> Vui lòng nhập địa chỉ email hợp lệ</div>
+          </div>
+
+          <div class="field">
+            <label><i class="fa fa-comment"></i> Nội dung</label>
+            <textarea placeholder="Nội dung bạn cần liên hệ"></textarea>
+          </div>
+
+          <button>Gửi thông tin</button>
+
+          <div class="success hidden">
+            <i class="fa fa-check-circle"></i>
+            Xin cảm ơn, form đã được gửi thành công!
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      const emailInput = document.getElementById('emailInput');
+      const emailError = document.getElementById('emailError');
+      const form = document.querySelector('form');
+
+      // Kiểm tra email khi người dùng nhập
+      emailInput.addEventListener('blur', function () {
+        if (this.value && !this.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+          emailError.style.display = 'block';
+        } else {
+          emailError.style.display = 'none';
+        }
+      });
+
+      // Kiểm tra email khi gửi form
+      form.addEventListener('submit', function (e) {
+        const emailValue = emailInput.value;
+
+        // Kiểm tra email hợp lệ
+        if (!emailValue.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+          e.preventDefault();
+          emailError.style.display = 'block';
+          return;
+        }
+
+        emailError.style.display = 'none';
+        document.querySelector('.success').classList.remove('hidden');
+      });
+    </script>
+  </body>
+</html>
