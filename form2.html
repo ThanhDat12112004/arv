@@ -27,7 +27,8 @@
       }
 
       .container {
-        width: 420px;
+        width: 90%;
+        max-width: 420px;
         border-radius: 18px;
         overflow: hidden;
         box-shadow: 0 20px 50px rgba(255, 255, 255, 0.35);
@@ -132,6 +133,61 @@
       .success.hidden {
         display: none;
       }
+
+      @media (max-width: 480px) {
+        body {
+          height: auto;
+          min-height: 100vh;
+          padding: 15px 0;
+        }
+
+        .container {
+          width: 95%;
+          border-radius: 12px;
+        }
+
+        .header {
+          padding: 16px;
+          font-size: 18px;
+          letter-spacing: 0.5px;
+        }
+
+        .form-box {
+          padding: 18px;
+        }
+
+        .field {
+          padding: 10px;
+          margin-bottom: 12px;
+        }
+
+        .field label {
+          font-size: 13px;
+          gap: 8px;
+          margin-bottom: 6px;
+        }
+
+        input,
+        textarea {
+          padding: 10px;
+          font-size: 14px;
+        }
+
+        textarea {
+          height: 90px;
+        }
+
+        button {
+          padding: 12px;
+          font-size: 16px;
+        }
+
+        .success {
+          font-size: 13px;
+          padding: 10px;
+          margin-top: 12px;
+        }
+      }
     </style>
   </head>
 
@@ -154,7 +210,9 @@
           <div class="field">
             <label><i class="fa fa-envelope"></i> Email</label>
             <input type="email" placeholder="Địa chỉ email của bạn" id="emailInput" />
-            <div class="error" id="emailError"><i class="fa fa-circle-exclamation"></i> Vui lòng nhập địa chỉ email hợp lệ</div>
+            <div class="error" id="emailError">
+              <i class="fa fa-circle-exclamation"></i> Vui lòng nhập địa chỉ email hợp lệ
+            </div>
           </div>
 
           <div class="field">
